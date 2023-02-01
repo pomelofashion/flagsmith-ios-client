@@ -51,9 +51,10 @@ public class Flagsmith {
   ///   - identity: ID of the user (optional)
   ///   - completion: Closure with Result which contains array of Flag objects in case of success or Error in case of failure
   public func getFeatureFlags(forIdentity identity: String? = nil,
+                              traits: [Trait]? = nil,
                               completion: @escaping (Result<[Flag], Error>) -> Void) {
     if let identity = identity {
-      getIdentity(identity) { (result) in
+      getIdentity(identity, traits: traits) { (result) in
         switch result {
         case .success(let identity):
           completion(.success(identity.flags))
@@ -196,8 +197,9 @@ public class Flagsmith {
   ///   - identity: ID of the user
   ///   - completion: Closure with Result which contains Identity in case of success or Error in case of failure
   public func getIdentity(_ identity: String,
+                          traits: [Trait]? = nil,
                           completion: @escaping (Result<Identity, Error>) -> Void) {
-    apiManager.request(.getIdentity(identity: identity)) { (result: Result<Identity, Error>) in
+    apiManager.request(.getIdentity(identity: identity, traits: traits)) { (result: Result<Identity, Error>) in
       completion(result)
     }
   }

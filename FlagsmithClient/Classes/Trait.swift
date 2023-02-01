@@ -131,3 +131,13 @@ public struct PostTrait: Codable {
     self.identity = IdentityStruct(identifier: identifier)
   }
 }
+
+public struct TraitsWithIdentifier: Codable {
+  public let identifier: String
+  public let traits: [Trait]
+  
+  public init(identifier: String, traits: [Trait]) {
+    self.identifier = identifier
+    self.traits = traits
+  }
+}
