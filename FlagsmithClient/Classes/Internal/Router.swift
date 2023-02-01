@@ -17,15 +17,15 @@ enum Router {
   }
   
   case getFlags
-  case getIdentity(identity: String)
+  case getIdentity(identity: String, traits: [Trait]?)
   case postTrait(trait: Trait, identity: String)
   case postAnalytics(events: [String:Int])
   
   private var method: HTTPMethod {
     switch self {
-    case .getFlags, .getIdentity:
+    case .getFlags:
       return .get
-    case .postTrait, .postAnalytics:
+    case .postTrait, .postAnalytics, .getIdentity:
       return .post
     }
   }
@@ -44,23 +44,21 @@ enum Router {
   }
 
   private var parameters: [URLQueryItem]? {
-    switch self {
-    case .getIdentity(let identity):
-      return [URLQueryItem(name: "identifier", value: identity)]
-    default:
-      return nil
-    }
+    return nil
   }
 
   private func body(using encoder: JSONEncoder) throws -> Data? {
     switch self {
-    case .getFlags, .getIdentity:
+    case .getFlags:
       return nil
     case .postTrait(let trait, let identifier):
       let traitWithIdentity = Trait(trait: trait, identifier: identifier)
       return try encoder.encode(traitWithIdentity)
     case .postAnalytics(let events):
       return try encoder.encode(events)
+    case .getIdentity(let identity, let traits):
+      let data = TraitsWithIdentifier(identifier: identity, traits: traits ?? [Trait]())
+      return try encoder.encode(data)
     }
   }
   
