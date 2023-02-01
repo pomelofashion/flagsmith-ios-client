@@ -199,7 +199,7 @@ public class Flagsmith {
   public func getIdentity(_ identity: String,
                           traits: [Trait]? = nil,
                           completion: @escaping (Result<Identity, Error>) -> Void) {
-      apiManager.request(.getIdentity(identity: identity, traits: traits)) { (result: Result<Identity, Error>) in
+    apiManager.request(.getIdentity(identity: identity, traits: traits)) { (result: Result<Identity, Error>) in
       completion(result)
     }
   }
