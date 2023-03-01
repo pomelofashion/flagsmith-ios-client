@@ -22,6 +22,7 @@ class APIManager {
   
   init() {
     let configuration = URLSessionConfiguration.default
+    configuration.timeoutIntervalForResource = Flagsmith.timeout
     self.session = URLSession(configuration: configuration)
   }
   

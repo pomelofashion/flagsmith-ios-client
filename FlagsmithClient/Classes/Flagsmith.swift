@@ -14,6 +14,7 @@ public class Flagsmith {
   public static let shared = Flagsmith()
   private let apiManager = APIManager()
   private lazy var analytics = FlagsmithAnalytics(apiManager: apiManager)
+  static var timeout: Double = 10.0
   
   /// Base URL
   ///
