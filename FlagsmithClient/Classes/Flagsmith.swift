@@ -14,7 +14,7 @@ public class Flagsmith {
   public static let shared = Flagsmith()
   private let apiManager = APIManager()
   private lazy var analytics = FlagsmithAnalytics(apiManager: apiManager)
-  static var timeout: Double = 10.0
+  static let defaultTimeout: Double = 10
   
   /// Base URL
   ///
@@ -44,7 +44,13 @@ public class Flagsmith {
     get { analytics.flushPeriod }
   }
 
-  private init() {}
+  /// Timeout
+  public var timeout: Double? {
+      set { apiManager.timeout = newValue }
+      get { apiManager.timeout }
+  }
+
+  public init() {}
   
   /// Get all feature flags (flags and remote config) optionally for a specific identity
   ///

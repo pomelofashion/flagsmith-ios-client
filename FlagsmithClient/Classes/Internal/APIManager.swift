@@ -19,10 +19,11 @@ class APIManager {
   var baseURL = URL(string: "https://edge.api.flagsmith.com/api/v1/")!
   /// API Key unique to an organization.
   var apiKey: String?
+  var timeout: Double?
   
   init() {
     let configuration = URLSessionConfiguration.default
-    configuration.timeoutIntervalForResource = Flagsmith.timeout
+    configuration.timeoutIntervalForResource = timeout ?? Flagsmith.defaultTimeout
     self.session = URLSession(configuration: configuration)
   }
   
